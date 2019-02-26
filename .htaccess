@@ -1,0 +1,11 @@
+RewriteEngine on
+
+# オブジェクトストレージ設定
+SetEnvIfNoCase FUEL_ENV ".*" storage_url=https://***/
+SetEnvIfNoCase FUEL_ENV "production" storage_url=https://***/
+
+# /files/ へのアクセスをオブジェクトストレージへ
+RewriteRule ^files/(.*) %{ENV:storage_url}$1 [R=302,L]
+
+# / へのアクセスを /public/ へ
+RewriteRule ^(.*)$ /public/$1 [L]
